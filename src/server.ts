@@ -88,13 +88,9 @@ app.post( "/persons", async ( req, res ) => {
     }
 
     let file = await filterImageFromURL(image_url);
-    res.send(file);
-    return res.status(200).sendFile(file);
     let files: string[] = [file];
-    deleteLocalFiles(files);
-
-    return res.status(200)
-              .send(`Welcome to the Cloud, ${image_url}!`);
+    res.on('finish', () => deleteLocalFiles(files));
+    return res.status(200).sendFile(file);
 } );
 
 // Get a greeting to a specific person to demonstrate req.query
@@ -108,13 +104,9 @@ app.get( "/filteredimage/", async ( req, res ) => {
   }
 
   let file = await filterImageFromURL(image_url);
-  res.send(file);
-  return res.status(200).sendFile(file);
   let files: string[] = [file];
-  deleteLocalFiles(files);
-
-  return res.status(200)
-            .send(`Welcome to the Cloud, ${image_url}!`);
+  res.on('finish', () => deleteLocalFiles(files));
+  return res.status(200).sendFile(file);
 } );
 
 // Post a greeting to a specific person
@@ -131,13 +123,9 @@ app.post( "/filteredimage", async ( req, res ) => {
     }
 
     let file = await filterImageFromURL(image_url);
-    res.send(file);
-    return res.status(200).sendFile(file);
     let files: string[] = [file];
-    deleteLocalFiles(files);
-
-    return res.status(200)
-              .send(`Welcome to the Cloud, ${image_url}!`);
+    res.on('finish', () => deleteLocalFiles(files));
+    return res.status(200).sendFile(file);
 } );
 //! END @TODO1
   
